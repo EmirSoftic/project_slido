@@ -39,6 +39,7 @@ Additional Features
 Real-Time Updates: The question and interaction page for both guests and presenters automatically refreshes when new data is available (e.g., new questions or likes).
 
 Technology Stack:
+
 Back-End: Developed using Node.js, the server handles data processing and communication with the database.
 
 Front-End: Utilizes HTML5, CSS, and JavaScript for creating a user-friendly and responsive interface.

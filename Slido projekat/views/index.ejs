@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slido pocetna</title>
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Open-mid_central_rounded_vowel_%28vector%29.svg/1200px-Open-mid_central_rounded_vowel_%28vector%29.svg.png" />
+  <!-- Latest compiled and minified CSS -->
+  <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+  />
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/stylesheets/header.css" />
+  <link rel="stylesheet" href="/stylesheets/glavna.css" />
+</head>
+<body>
+<div class="container-fluid navbar">
+  <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-4 nb">
+      <a
+              target="_blank"
+              href="https://www.linkedin.com/in/emir-softi%C4%87-b89bab228/"
+              class="menu-btn"
+      >
+        O meni
+      </a>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-4 nb naslov">
+      <a
+              href="/"
+              style="text-align: center; text-decoration: none; color: white"
+      >SLIDO</a
+      >
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-4">
+          <span class="login">
+            <a href="/users/reg">
+              <button type="button" class="btn btn-light dugme">
+                <span class="glyphicon glyphicon-user"></span> Sign up
+              </button>
+            </a>
+          </span>
+      <a class="btn btn-primary dugme" href="/users/login" role="button"
+      >Login</a
+      >
+    </div>
+  </div>
+</div>
+<div class="container content">
+  <div class="container glavni">
+    <div class="row">
+      <div class="col-lg-12 kod">
+        <form class="form-inline" action="/predavanje" method="post">
+              <span id="pozdravkorisniku"
+              >Prisustvujete predavanju?
+                <br />
+                Unesite vaš kod ovdje:</span
+              >
+          <input
+                  type="text"
+                  id="kod"
+                  placeholder="Vaš kod:"
+                  name="kod"
+                  class="kod-input"
+          />
+          <span class="submit">
+                <input
+                        type="submit"
+                        name="commit"
+                        class="kod-submit"
+                        value="Pristupi predavanju"
+                />
+              </span>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid kratkiopis">
+    <div class="row">
+      <div class="col-lg-12">
+        <p>
+          Ovo je aplikacija namjenjena da Vam olakša organizaciju i
+          prezentaciju predavanja, bilo da se radi o poslovnim
+          prezentacijama, održavanju nekog vida nastave ili nešto drugo.
+          Ukoliko želite da kreirate svoja predavanja sa posebnim linkom za
+          svako predavanje, molimo vas da se prijavite klikom na ovaj link
+          <a href="/users/reg">ovdje</a>, a ako ste već nekada prezentovali
+          koristeći ovu aplikaciju, pristupite svom računu klikom
+          <a href="/users/login">ovdje</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container futer">
+  <div class="row">
+    <div class="col-sm-4 tekst">
+      <a href="https://www.instagram.com/emir.softic01/" target="_blank"
+      >Instagram</a
+      >
+    </div>
+    <div class="col-sm-4 tekst">
+      <a href="mailto: e.softic2001@gmail.com">Moj Email</a>
+    </div>
+
+    <div class="col-sm-4 tekst">
+      <p>Datum izrade:1.1.2023. &#169;</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

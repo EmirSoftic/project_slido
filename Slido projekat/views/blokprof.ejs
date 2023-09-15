@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blokiraj</title>
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Open-mid_central_rounded_vowel_%28vector%29.svg/1200px-Open-mid_central_rounded_vowel_%28vector%29.svg.png" />
+
+    <!-- Latest compiled and minified CSS -->
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/predavac.css" />
+    <link rel="stylesheet" href="/stylesheets/header.css" />
+</head>
+<body>
+<div class="modal show" id="myModal1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title" id="exampleModalLabel">Koliko dugo želite blokirati profesora</h5>
+
+            </div>
+            <div class="modal-body">
+                <form action="/users/blokprof" method="post">
+                    <div class="mb-3">
+                        <button type="submit" name = "dani" value="petnaest" class="btn btn-danger">Blokiraj 15 dana</button>
+                        <button type="submit" name = "dani" value="trideset" class="btn btn-danger">Blokiraj 30 dana</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a href="/users/admin">Odustani</a></button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/07758f63a4.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</body>
+</html>

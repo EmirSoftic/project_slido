@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Predavac</title>
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Open-mid_central_rounded_vowel_%28vector%29.svg/1200px-Open-mid_central_rounded_vowel_%28vector%29.svg.png" />
+
+    <!-- Latest compiled and minified CSS -->
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/stylesheets/predavac.css" />
+    <link rel="stylesheet" href="/stylesheets/header.css" />
+</head>
+<body>
+<div class="container-fluid navbar">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 nb"> <a href="/users/logout">Logout</a> </div>
+        <div class="col-lg-6 col-md-3 col-sm-6 nb naslov">
+            <a href="/" style="text-align: center; text-decoration: none; color: white">SLIDO</a>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6"></div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2">
+        </div>
+        <div class="col-lg-9">
+            <h1>Dobro došli: <%=ime%> <%=prezime%> </h1>
+            <br />
+            <div class="dugmeZaNovoPredavanje">
+                <button
+                        class="icon-btn add-btn"
+                        onclick="document.getElementById('id01').style.display='block'"
+                >
+                    <div class="add-icon"></div>
+                    <div class="btn-txt">Dodajte predavanje</div>
+                </button>
+            </div>
+            <hr />
+            <%if(pred.length === 0){%>
+            <p>Niste još kreirali niti jedno predavanje</p>
+            <%} else{%>
+            <div class="table-responsive">
+                <table class="table">
+                    <caption>
+                        Lista vaših predavanja:
+                    </caption>
+                    <thead>
+                        <tr>
+                            <td style="font-weight: bold">Naziv</td>
+                            <td style="font-weight: bold">Kod</td>
+                            <td></td>
+                            <td>Statistika</td>
+                            <td style="font-weight: bold">Vrijeme</td>
+                            <td style="font-weight: bold">Ponavljanje</td>
+                        </tr>
+                    </thead>
+                        <%for(let i = 0; i < pred.length; i++){%>
+                        <tr>
+                            <td><%=pred[i].naziv%></td>
+                            <td>
+                                <%=pred[i].kod%>
+                                <a href=<%="/users/krupnikod/" + pred[i].kod%> target="_blank"><i class="fa fa-eye"></i></a>
+                            </td>
+                            <td><a href="<%="/users/posaljiMail/" + pred[i].kod%>"  style="margin-left: 10px"><i class="fa fa-envelope"></i></a></td>
+                            <td>
+                                <a href="<%="/users/prikaziNeodgovorene/" + pred[i].kod%>"><i class="fa fa-comment"></i></a>
+                                <a href="<%="/users/prikaziOdgovorene/" + pred[i].kod%>"><i class="fa fa-check"></i></a>
+                                <a href="<%="/users/prikaziBlokirane/" + pred[i].kod%>"><i class="fa fa-ban"></i></a>
+                                <a href="<%="/users/prikaziStatistiku/" + pred[i].kod%>" target="_blank"><i class="fa fa-bar-chart"></i></a>
+                            </td>
+                            <td><%=pred[i].vrijeme%></td>
+                            <%if(pred[i].ponavljanje === null){%>
+                                <td>Odrzava se: <%=pred[i].datum%></td>
+                            <%} else{%>
+                                <td>Ponavlja se do: <%=pred[i].datum%></td>
+                            <%}%>
+                            <td>
+                                <a href="<%="/users/profbrisipredavanje/" + pred[i].id%>"  style="margin-left: 10px"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        <%}%>
+                </table>
+            </div>
+            <%}%>
+        </div>
+        <!--ovo sluzi samo da ne izgleda nagomilano tabela skroz do kraja-->
+        <div class="col-lg-1"></div>
+    </div>
+</div>
+
+
+<div id="id01" class="modal">
+
+    <form
+            class="modal-content animate"
+            action="/users/predavac"
+            method="post"
+    >
+
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <h2>Unesite detalje za predavanje:</h2>
+        </div>
+
+        <div class="container">
+            <label for="naziv"><b>Unesite naziv predavanja:</b></label>
+            <input
+                    type="text"
+                    placeholder="Naziv vašeg predavanja:"
+                    name="naziv"
+                    required
+            />
+
+            <label for="kod"><b>Unesite kod za vaše predavanje</b></label>
+            <input
+                    id="kodtekst"
+                    type="text"
+                    placeholder="Vaš unikatan kod:"
+                    name="kod"
+            />
+            <div class="button" onclick="dajKombinaciju()">
+                Slučajna kombinacija za kod vašeg predavanja
+            </div>
+            <br />
+            <br />
+            <label for="vrijeme"><b>Vrijeme održavanja predavanja</b></label>
+            <input
+                    type="time"
+                    placeholder="Vrijeme predavanja"
+                    name="vrijeme"
+                    id="vrijeme"
+                    required
+            />
+            <br />
+            <br />
+            <label for="ponavljanjeUpit"
+            ><b>Želite li odrediti učestalost ponavljanja predavanja?</b></label
+            >
+            <input
+                    type="radio"
+                    class="form-check-input"
+                    name="upit"
+                    id="da"
+                    value="da"
+            />
+            <label for="da" class="form-check-label">DA</label>
+            <input
+                    type="radio"
+                    class="form-check-input"
+                    name="upit"
+                    id="ne"
+                    value="ne"
+            />
+            <label for="ne" class="form-check-label">NE</label>
+
+            <div id="skriveniDIV" style="display: none">
+                <label for="ucestalost" id="labelaUcestalost"
+                ><b>Koliko često želite ovo ponavljanje:</b></label
+                >
+                <br />
+                <input
+                        type="radio"
+                        class="form-check-input"
+                        name="ponavljanje"
+                        id="uvijek"
+                        value="uvijek"
+                />
+                <label for="uvijek" class="form-check-label">Svake sedmice</label>
+                <br>
+                <label for="datumdo" class="form-check-label">Do kojeg datuma?</label>
+                <input
+                        type="date"
+                        class="form-check-input"
+                        name="datumdo"
+                        id="datumdo"
+                />
+            </div>
+            <div id="skriveniDIVNE" style="display: none">
+                <label for="ucestalost" id="labelaUcestalost"
+                ><b>Koliko često želite ovo ponavljanje:</b></label
+                >
+                <br />
+                <br>
+                <label for="datumdo" class="form-check-label">Kojeg datuma?</label>
+                <input
+                        type="date"
+                        class="form-check-input"
+                        name="datumdo"
+                        id="datumdo"
+                />
+            </div>
+            <button class="spasi">Spasi predavanje</button>
+        </div>
+    </form>
+
+
+    </form>
+</div>
+
+
+<!-- JavaScript -->
+<script>
+    // Get the modal
+    var modal = document.getElementById("id01");
+
+    // kada korisnik klikne bilo gdje van modala, izaci iz njeg
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+
+    function dajKombinaciju() {
+        let komb = "";
+        let opcije =
+            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        for (let i = 0; i < 15; i++) {
+            komb += opcije.charAt(Math.floor(Math.random() * opcije.length));
+        }
+        document.getElementById("kodtekst").value = komb;
+    }
+    var checkbox = document.getElementById("da");
+    var dio = document.getElementById("skriveniDIV");
+    var ne = document.getElementById("ne");
+    var dioNe = document.getElementById("skriveniDIVNE")
+
+    checkbox.addEventListener("change", function () {
+        if (checkbox.checked) {
+            dio.style.display = "block";
+            dioNe.style.display = "none";
+        }
+    });
+
+    ne.addEventListener("change", function () {
+        if (ne.checked) {
+            dio.style.display = "none";
+            dioNe.style.display = "block";
+        }
+    });
+
+    const schedule = require('node-schedule');
+
+    function scheduleJob() {
+        const endDateString = document.getElementById("datumdo").value + "T" + document.getElementById("vrijeme").value;
+        const endDate = new Date(Date.parse(endDateString));
+
+        const myFunction = () => {
+            console.log("Running myFunction!");
+        };
+
+        const job = schedule.scheduleJob({
+            hour: endDate.getUTCHours(),
+            minute: endDate.getUTCMinutes(),
+            dayOfWeek: endDate.getUTCDay(),
+        }, function(){
+            if (new Date() < endDate) {
+                myFunction();
+                job.reschedule({
+                    hour: endDate.getUTCHours(),
+                    minute: endDate.getUTCMinutes(),
+                    dayOfWeek: endDate.getUTCDay(),
+                });
+            } else {
+                job.cancel();
+            }
+        });
+    }
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/07758f63a4.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>

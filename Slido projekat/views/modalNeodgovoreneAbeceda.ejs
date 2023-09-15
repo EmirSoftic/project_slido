@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<title>Pitanja</title>
+<link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Open-mid_central_rounded_vowel_%28vector%29.svg/1200px-Open-mid_central_rounded_vowel_%28vector%29.svg.png" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<body>
+
+
+<div class="container">
+    <br>
+    <h2>Ovo je lista pitanja za predavanje sa kodom <%=kod%></h2>
+    <br>
+    <%if(poruke.length === 0){%>
+        <p>Nije vam postavljeno niti jedno pitanje još uvijek.</p>
+    <%} else{%>
+
+        <button type="button" id="lajkovi" class="btn btn-primary"><a href="<%="/users/prikaziNeodgovorene/" + kod%>" style="color: #ffffff; text-decoration: none">Sortiraj po lajkovima</a></button>
+        <button type="button" class="btn btn-primary" disabled><a style="color: #ffffff; text-decoration: none">Sortiraj abecedno</a></button>
+
+    <div class="table-responsive-md">
+        <div class="table-responsive">
+        <table class="table table-hover" id="porukeTable">
+            <caption>
+                Lista poruka na koje niste odgovorili:
+            </caption>
+            <thead>
+            <tr>
+                <td style="font-weight: bold">Pitanje</td>
+                <td style="font-weight: bold">Broj lajkova</td>
+                <td style="font-weight: bold"></td>
+                <td style="font-weight: bold"></td>
+            </tr>
+            </thead>
+            <tbody id="tijelo">
+                <%for(let i = 0; i < poruke.length; i++){%>
+                <tr>
+                    <td><%=poruke[i].tekst%></td>
+                    <td><%=poruke[i].brojlajkova%></td>
+                    <td>
+                        <a href="<%="/users/odgovorio/" + poruke[i].id%>" style="margin-left: 10px"><i class="fa fa-check" aria-hidden="true"></i></a>
+                    </td>
+                    <td>
+                        <a href="<%="/users/blokirao/" + poruke[i].id%>" style="margin-left: 10px"><i class="fa fa-ban" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                <%}%>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <%}%>
+        <button type="button" class="btn btn-primary"><a href="/users/predavac" style="color: #ffffff; text-decoration: none">Povratak</a></button>
+</div>
+
+<script>
+    var kod = '<%=kod%>';
+    $(document).ready(function() {
+        setInterval(function() {
+            $.ajax({
+                type: 'GET',
+                url: '/users/noviPodaciAbeceda/' + kod,
+                success: function(data) {
+                    // update table with new data
+                    $('#tijelo').empty();
+
+                    // Iteriranje kroz nove podatke i dodavanje ih u tabelu
+                    for (let i = 0; i < data.length; i++) {
+                        let row = '<tr>' +
+                            '<td>' + data[i].tekst + '</td>' +
+                            '<td>' + data[i].brojlajkova + '</td>' +
+                            '<td>' +
+                            '<a href="/users/odgovorio/' + data[i].id + '" style="margin-left: 10px"><i class="fa fa-check" aria-hidden="true"></i></a>' +
+                            '</td>' +
+                            '<td>' +
+                            '<a href="/users/blokirao/' + data[i].id + '" style="margin-left: 10px"><i class="fa fa-ban" aria-hidden="true"></i></a>' +
+                            '</td>' +
+                            '</tr>';
+                        $('#tijelo').append(row);
+                    }
+                }
+            });
+        }, 3000); // refresh every 3 seconds
+    });
+
+</script>
+</body>
+</html>

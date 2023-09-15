@@ -1,0 +1,33 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+.navbar{
+    background-color: #3d8695;
+    text-align: center;
+}
+.nb{
+    vertical-align: middle;
+    padding-top: 15px;
+}
+.nb a{
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+.naslov{
+    color: white;
+    font-weight: bolder;
+}
+.dugme{
+    margin-top: 5px;
+    padding: 8px;
+}
+.login{
+    padding-right: 10px;
+}
+.menu-btn:hover{
+    color: #93deed;
+
+}
+

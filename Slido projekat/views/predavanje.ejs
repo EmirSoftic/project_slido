@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predavanje</title>
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Open-mid_central_rounded_vowel_%28vector%29.svg/1200px-Open-mid_central_rounded_vowel_%28vector%29.svg.png" />
+
+  <!-- Latest compiled and minified CSS -->
+  <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+  />
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/stylesheets/chat.css" />
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+<div id="chat-container">
+  <div id="chat-header">
+    <h1>Neodgovorena pitanja</h1>
+    <div
+            id="chat-options"
+            class="btn-group"
+            role="group"
+            aria-label="Basic example"
+    >
+      <button id="neodgovorene" type="button" class="btn btn-secondary">
+        Neodgovorena
+      </button>
+      <button id="odgovorene" type="button" class="btn btn-secondary">
+        Odgovorena
+      </button>
+      <button id="blokirane" type="button" class="btn btn-secondary">
+        Blokirana
+      </button>
+    </div>
+  </div>
+  <div class="table-responsive">
+  <div id="chat-messages" class="chat-section">
+    <table id="chat-table" class="chat-table"></table>
+    <!-- Messages will be added here dynamically -->
+  </div>
+  </div>
+  <div id="chat-input">
+    <form
+            class="modal-content animate"
+            action="/predavanje/postavi"
+            method="post"
+            style="background-color: #93deed"
+    >
+    <input type="text" id="tekstporuke" name="tekstporuke" placeholder="Postavite pitanje ovdje..." />
+    <button onclick="posaljiPoruku()">Pošalji pitanje</button>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  var socket = io.connect('ws://localhost:3000');
+  var porukaProstor = document.getElementById("chat-messages");
+  var tabelaPoruka = document.createElement("table");
+  var messageCounter = 1;
+  tabelaPoruka.setAttribute("id","chat-table");
+  porukaProstor.appendChild(tabelaPoruka);
+
+  socket.on('poruka_sa_servera',function (d){
+    var row = tabelaPoruka.insertRow();
+    var cell = row.insertCell();
+    cell.innerHTML = d;
+    var dugme = document.createElement("a");
+    dugme.setAttribute("href","#");
+    dugme.setAttribute("class", "message-link");
+    dugme.setAttribute("data-id", messageCounter);
+    var icon = document.createElement("i");
+    icon.setAttribute("class", "fa fa-thumbs-up");
+    dugme.appendChild(icon);
+    messageCounter++
+    cell.appendChild(dugme);
+    dugme.addEventListener("click", function() {
+      var k = this.getAttribute("data-id");
+      window.location.href = '/predavanje/povecajLajk/' + d;
+    });
+  });
+
+  socket.on('sve_poruke', function (d){
+      var msg = d.split(",");
+      for (let i = 0; i < msg.length; i++) {
+        var row = tabelaPoruka.insertRow();
+        var cell = row.insertCell();
+        cell.innerHTML = msg[i];
+        var dugme = document.createElement("a");
+        dugme.setAttribute("href","#");
+        dugme.setAttribute("class", "message-link");
+        dugme.setAttribute("data-id", messageCounter);
+        var icon = document.createElement("i");
+        icon.setAttribute("class", "fa fa-thumbs-up");
+        dugme.appendChild(icon);
+        messageCounter++;
+        cell.appendChild(dugme);
+        dugme.addEventListener("click", function() {
+          window.location.href = '/predavanje/povecajLajk/' + msg[i];
+        });
+      }
+  });
+
+
+  function posaljiPoruku(){
+    let tekst = document.getElementById("tekstporuke").value;
+    socket.emit('nova_poruka',tekst);
+  }
+
+
+  let neodgovoreneButton = document.getElementById("neodgovorene");
+  let odgovoreneButton = document.getElementById("odgovorene");
+  let blokiraneButton = document.getElementById("blokirane");
+  let input = document.querySelector("#chat-input input");
+  let sendBtn = document.querySelector("#chat-input button");
+  let messages = document.querySelector("#chat-messages");
+
+  let chatHeader = document.querySelector("#chat-header h1");
+
+  neodgovoreneButton.addEventListener("click", function () {
+    chatHeader.innerHTML = "Neodgovorena pitanja";
+    input.disabled = false;
+    sendBtn.disabled = false;
+    messages.innerHTML = "";
+    // retrieve the neodgovorene messages and display them
+    retrieveAndDisplayMessages("neodgovorene");
+  });
+
+  odgovoreneButton.addEventListener("click", function () {
+    chatHeader.innerHTML = "Odgovorena pitanja";
+    input.disabled = true;
+    sendBtn.disabled = true;
+    messages.innerHTML = "";
+    // retrieve the odgovorene messages and display them
+    retrieveAndDisplayMessages("odgovorene");
+  });
+
+  blokiraneButton.addEventListener("click", function () {
+    chatHeader.innerHTML = "Blokirana pitanja";
+    input.disabled = true;
+    sendBtn.disabled = true;
+    messages.innerHTML = "";
+    // retrieve the blokirane messages and display them
+    retrieveAndDisplayMessages("blokirane");
+  });
+
+</script>
+</body>
+</html>
+

@@ -18,7 +18,9 @@ Presenter Module:
 
 Presenters, who are registered users, have significant capabilities within the system:
 
-Event Creation: Easily create events by specifying a code, title, time, and repetition rules (e.g., weekly until June 15th). Upload a cover image for the event.
+Event Creation:
+
+Easily create events by specifying a code, title, time, and repetition rules (e.g., weekly until June 15th). Upload a cover image for the event.
 Access Code Sharing: Share access codes for events with guests.
 Event Dashboard: View a list of all created events with statistics on the number of questions asked and answered.
 Question Management: Review all questions asked during an event. Presenters can delete, answer, or hide questions. Questions can be sorted by various criteria (e.g., time, approval count).
@@ -38,6 +40,9 @@ Real-Time Updates: The question and interaction page for both guests and present
 
 Technology Stack:
 Back-End: Developed using Node.js, the server handles data processing and communication with the database.
+
 Front-End: Utilizes HTML5, CSS, and JavaScript for creating a user-friendly and responsive interface.
+
 Database: Stores user and event data, ensuring data persistence and retrieval.
+
 SQL Database: Provides structured data storage for efficient management.
